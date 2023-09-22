@@ -85,13 +85,18 @@ static int[] Merge(int[] left, int[] right)
     return result;
 }
 
-StreamReader sr = new StreamReader(args[0]);
+string filePath;
+StreamReader sr;
 List<int> list = new List<int>();
-if (args.Length < 0)
+
+if (args.Length == 0)
 {
-    System.Console.WriteLine("File does not exist");
-    Environment.Exit(0);
+    Console.Write("Enter your file path: ");
+    filePath = Console.ReadLine();
+    sr = new StreamReader(filePath);
 }
+else { sr = new StreamReader(args[0]); }
+
 while (!sr.EndOfStream)
 {
     int[] splitValues = sr.ReadLine().Split(',').Select(int.Parse).ToArray();
@@ -102,11 +107,16 @@ while (!sr.EndOfStream)
 }
 int[] array = list.ToArray();
 
-int[] SortedArray = BubbleSort(array);
 
-StringBuilder sb = new StringBuilder();
-foreach (int value in SortedArray)
-{
-    sb.Append(value + ",");
-}
-System.Console.WriteLine(sb.ToString().TrimEnd(','));
+int[] mergeSortedArray = MergeSort(array);
+
+int[] bubbleSortedArray = BubbleSort(array);
+
+
+// This is used to see if the sort methods work not used when profiling performance.
+/*    StringBuilder sb = new StringBuilder();
+    foreach (int value in mergeSortedArray)
+    {
+        sb.Append(value + ",");
+    }
+    System.Console.WriteLine(sb.ToString().TrimEnd(','));*/
